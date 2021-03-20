@@ -25,6 +25,8 @@ $monthACC =  $_POST['monthACC'];
 $yearACC =  $_POST['yearACC'];
 $url =  $_POST['url'];
 $doi =  $_POST['doi'];
+$id_count = $_POST['id_count'];
+
 
 // $stmt = $con->prepare("INSERT INTO `author1`(`title`, `journal_name`, `periodical_name`, `city`, `dayP`, `monthP`, `yearP`, `pages`)
 //                         VALUES (?, ?, ?, ?, ?, ?, ?, ?)"); echo $con-> error;die;
@@ -32,19 +34,20 @@ $doi =  $_POST['doi'];
 // $stmt->execute();
 // $stmt->close();
 
-if($_POST["emp_id"] != '')  
-      {  
-           $query = "  
-           UPDATE author   
-           SET name='$name',   
-           title='$title',   
-           journal_name='$journal_name',   
-           yearACC = '$yearACC',   
-           WHERE id='".$_POST["emp_id"]."'";  
+
+// if($_POST['id_count'] != '')  
+//       {  
+//            $query = "  
+//            UPDATE author   
+//            SET name='$name',   
+//            title='$title',   
+//            journal_name='$journal_name',   
+//            yearACC = '$yearACC',   
+//            WHERE id='".$_POST['id_count']."'";  
            
-      }  
-      else  
-      {  
+//       }  
+//       else  
+//       {  
  $sql= mysqli_query($con,"INSERT INTO author(name,title,journal_name,periodical_name,city,dayP,monthP,yearP,pages,editor,publisher,edition,volume,issue,short_title,standard_num,comment,medium,dayACC,monthACC,yearACC,url,doi)  VALUES('".$name."','".$title."','".$journal_name."','".$periodical_name."','".$city."','".$dayP."','".$monthP."','".$yearP."','".$pages."','".$editor."','".$publisher."','".$edition."','".$volume."','".$issue."','".$short_title."','".$standard_num."','".$comment."','".$medium."','".$dayACC."','".$monthACC."','".$yearACC."','".$url."','".$doi."')");
-      }
+     // }
 ?>   

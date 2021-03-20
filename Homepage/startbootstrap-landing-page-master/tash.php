@@ -76,7 +76,7 @@ include "config_s.php";
               <th>&nbsp;</th>
             </tr>
             <?php 
-              $query = "select * from author";
+              $query = "select * from tash";
               $result = mysqli_query($con,$query);
               while($row = mysqli_fetch_array($result)){
                 $id = $row['id'];
