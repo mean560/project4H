@@ -32,7 +32,19 @@ $doi =  $_POST['doi'];
 // $stmt->execute();
 // $stmt->close();
 
-
+if($_POST["emp_id"] != '')  
+      {  
+           $query = "  
+           UPDATE author   
+           SET name='$name',   
+           title='$title',   
+           journal_name='$journal_name',   
+           yearACC = '$yearACC',   
+           WHERE id='".$_POST["emp_id"]."'";  
+           
+      }  
+      else  
+      {  
  $sql= mysqli_query($con,"INSERT INTO author(name,title,journal_name,periodical_name,city,dayP,monthP,yearP,pages,editor,publisher,edition,volume,issue,short_title,standard_num,comment,medium,dayACC,monthACC,yearACC,url,doi)  VALUES('".$name."','".$title."','".$journal_name."','".$periodical_name."','".$city."','".$dayP."','".$monthP."','".$yearP."','".$pages."','".$editor."','".$publisher."','".$edition."','".$volume."','".$issue."','".$short_title."','".$standard_num."','".$comment."','".$medium."','".$dayACC."','".$monthACC."','".$yearACC."','".$url."','".$doi."')");
-
+      }
 ?>   

@@ -86,28 +86,23 @@ include "config_s.php";
                 $year = $row['yearACC'];
                 ?>
                 <td>
-                  <div class="custom-control custom-checkbox mb-3">
-                    <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
-                  </div>
+                  <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
+
                 </td>
                 <?php
-                // echo "<td></td>";
-                echo "<td></td>";
-                echo "<td>".$name."</td>";
-                echo "<td>".$title."</td>";
-                echo "<td>".$journal."</td>";
-                echo "<td>".$year."</td>";
-                // echo "<td><button data-id='".$id."' class='useredit'><i class="bi bi-pencil-square"></td>";
+                  // echo "<td></td>";
+                  echo "<td></td>";
+                  echo "<td>".$name."</td>";
+                  echo "<td>".$title."</td>";
+                  echo "<td>".$journal."</td>";
+                  echo "<td>".$year."</td>";
                 ?>
                 <td>
-                  <button type="button" class="btn btn-warning" name="edit_author"><i class="fas fa-edit" style="color:white"></i></button>
+                  <button type="button" class="btn btn-warning edit_data"  data-id="<?php echo $id?>" id="userinfo" name="edit_author"><i class="fas fa-edit" style="color:white"></i></button>
                   <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
                 </td>
                 <?php
-                echo "<td></td>";
-                // echo "<td><button data-id='".$id."' class='userinfo'>Info</button></td>";
                 echo "</tr>";
-              
               }
             ?>
           </table>
@@ -280,6 +275,7 @@ include "config_s.php";
               <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">PAGES&nbsp;&nbsp;:</p>
               <input type="text" id="pages" class="form-control" placeholder="50-62" style="width: 500px; display: inline-block; padding-right: 0px; ">
             </div>
+            <input type="hidden" name="emp_id" id="emp_id" />  
         
 
           <!-- Demo Collapse -->
@@ -351,7 +347,7 @@ include "config_s.php";
 </div>
 
 <!-- Modal Edit -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="empModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -389,6 +385,47 @@ include "config_s.php";
     $('#submit').click(function () {
       saveAuthor();
     });
+
+    // $('#userinfo').click(function(){
+   
+    //   var id = $(this).data('id');
+
+    //     // AJAX request
+    //     $.ajax({
+    //       url: 'ajax_fetch.php',
+    //       type: 'post',
+    //       data: {id:id},
+    //      success:function(data){  
+    //                  $('#name').val(data.name);  
+    //                  $('#title').val(data.title);  
+    //                  $('#journal_name').val(data.journal_num);  
+    //                  $('#yearACC').val(data.yearACC);  
+    //                  $('#id').val(data.id);  
+    //                  $('#submit').val("Update");  
+    //                  $('#myModal').modal('show');  
+    //             }  
+    //     });
+    //   });
+
+    $('#userinfo').click(function(){  
+           var emp_id = $(this).attr("id");  
+           $.ajax({  
+                url:"ajax_fetch.php",  
+                method:"POST",  
+                data:{emp_id:emp_id},  
+                dataType:"json",  
+                success:function(data){  
+                     $('#name').val(data.name);  
+                     $('#title').val(data.title);  
+                     $('#journal_name').val(data.journal_num);  
+                     $('#yearACC').val(data.yearACC);  
+                     $('#id').val(data.id);  
+                     $('#emp_id').val(data.id);  
+                     $('#submit').val("Update");  
+                     $('#myModal').modal('show');  
+                }  
+           });  
+      });  
 
     // $('#tableAuthor').DataTable( {
     //     columnDefs: [ {
