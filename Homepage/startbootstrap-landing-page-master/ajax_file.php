@@ -16,7 +16,7 @@ while( $row = mysqli_fetch_array($result) ){
  $title = $row['title'];
  $journal = $row['journal_name'];
 //  $city = $row['city'];
- $year = $row['yearACC'];
+ $year = $row['yearP'];
  
  $response .= "<tr>";
  $response .= "<td>AUTHOR : </td><td>".$name."</td>";
