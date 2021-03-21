@@ -98,7 +98,7 @@ include "config_s.php";
                   echo "<td>".$year."</td>";
                 ?>
                 <td>
-                  <button type="button" class="btn btn-warning edit_data"  data-id="<?php echo $id?>" id="userinfo" name="edit_author"><i class="fas fa-edit" style="color:white"></i></button>
+                  <button type="button" class="btn btn-warning editbtn"  id="<?php echo $row['id'] ?>" id="userinfo" name="edit_author"><i class="fas fa-edit" style="color:white"></i></button>
                   <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
                 </td>
                 <?php
@@ -207,7 +207,7 @@ include "config_s.php";
       <div class="modal-body">
         <!-- <div class="container"> -->
         <form method="POST" name="add_name" id="add_name">
-          <input type="hidden" name="update_id" id="update_id" value="<?php echo $id; ?>">  
+          <!-- <input type="hidden" name="update_id" id="update_id" value="<?php echo $id; ?>">   -->
 
           <div class="form-group">
             <!-- <form method="POST" name="add_name" id="add_name"> -->
@@ -329,27 +329,171 @@ include "config_s.php";
       </div>  
   </div>
 </div>
-
+<!-- ####################################################################################################################### -->
 <!-- Modal Edit -->
-<div class="modal fade" id="empModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+<div id="myEditModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+      <div class="modal-header text-center d-block">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+        <h4 class="modal-title">Edit Source</h4>
+        <h5 class="modal-title" style="display: contents;">Type of Source&nbsp;&nbsp;&nbsp;:</h5>
+        <div class="form-group" style="display: inline-block;">
+          <select class="form-control" data-role="" id="selectValue" style="max-width: 255px; max-height: 35px;
+                                         padding: 0px 0px; border: none; background:none; font-size: 18px; ">
+            <!-- <option value="value0"></option> -->
+            <!-- <option value="value1">Book</option>
+            <option value="value2">Book Section</option> -->
+            <option value="value3">Journal Article</option>
+            <option selected value="value4">Article in a Periodical</option>
+            <!-- <option value="value5">Conference Proceedings</option>
+            <option value="value6">Report</option>
+            <option value="value7">Web site</option>
+            <option value="value8">Document From Web site</option>
+            <option value="value9">Electronic Source</option>
+            <option value="value10">Art</option>
+            <option value="value11">Sound Recording</option>
+            <option value="value12">Performance</option>
+            <option value="value13">Film</option>
+            <option value="value14">Interview</option>
+            <option value="value15">Patent</option>
+            <option value="value16">Case</option>
+            <option value="value17">Miscellaneous</option> -->
+          </select>
+        </div>
       </div>
+
       <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
+        <!-- <div class="container"> -->
+        <form method="POST" name="edit_name" id="edit_name action="update.php">
+          <input type="hidden" name="update_id" id="update_id" value="<?php echo $id; ?>">  
+
+          <div class="form-group">
+            <!-- <form method="POST" name="add_name" id="add_name"> -->
+              <div class="table-responsive">
+                <table id="dynamic_field">
+                  <tr>
+                    <td class="text" style="padding-left: 25px;">AUTHOR&nbsp;&nbsp;</td>
+                    <td><input type="text" name="name" id="name" value="<?php echo $name ?>" class="form-control name_list"
+                        style="width: 400px;" /></td>
+                    <td><button type="button" name="remove" id="'+i+'" class="btn btn_remove"><img
+                          src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPHBhdGggZD0iTTI1NiwwQzExNC44NTMsMCwwLDExNC44MzMsMCwyNTZzMTE0Ljg1MywyNTYsMjU2LDI1NmMxNDEuMTY3LDAsMjU2LTExNC44MzMsMjU2LTI1NlMzOTcuMTQ3LDAsMjU2LDB6IE0yNTYsNDcyLjM0MSAgICBjLTExOS4yOTUsMC0yMTYuMzQxLTk3LjA0Ni0yMTYuMzQxLTIxNi4zNDFTMTM2LjcwNSwzOS42NTksMjU2LDM5LjY1OVM0NzIuMzQxLDEzNi43MDUsNDcyLjM0MSwyNTZTMzc1LjI5NSw0NzIuMzQxLDI1Niw0NzIuMzQxeiAgICAiIGZpbGw9IiNjYjAwMDAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiPjwvcGF0aD4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPHBhdGggZD0iTTM1NS4xNDgsMjM0LjM4NkgxNTYuODUyYy0xMC45NDYsMC0xOS44Myw4Ljg4NC0xOS44MywxOS44M3M4Ljg4NCwxOS44MywxOS44MywxOS44M2gxOTguMjk2ICAgIGMxMC45NDYsMCwxOS44My04Ljg4NCwxOS44My0xOS44M1MzNjYuMDk0LDIzNC4zODYsMzU1LjE0OCwyMzQuMzg2eiIgZmlsbD0iI2NiMDAwMCIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiI+PC9wYXRoPgoJPC9nPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjwvZz48L3N2Zz4="
+                          style="width: 30px; height: 30px; display: block; padding-left: 0px;" /></button></td>
+                  </tr>
+                </table>
+              </div>
+          
+          </div>
+          <!-- </div> -->
+
+          <button type="button" name="addif" id="addif" class="btn btn-default" style="margin-left: 120px; margin-bottom: 20px; padding-left: 15px;"><img
+            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPjxwYXRoIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgZD0ibTI1NiA1MTJjLTE0MS4xNjQwNjIgMC0yNTYtMTE0LjgzNTkzOC0yNTYtMjU2czExNC44MzU5MzgtMjU2IDI1Ni0yNTYgMjU2IDExNC44MzU5MzggMjU2IDI1Ni0xMTQuODM1OTM4IDI1Ni0yNTYgMjU2em0wLTQ4MGMtMTIzLjUxOTUzMSAwLTIyNCAxMDAuNDgwNDY5LTIyNCAyMjRzMTAwLjQ4MDQ2OSAyMjQgMjI0IDIyNCAyMjQtMTAwLjQ4MDQ2OSAyMjQtMjI0LTEwMC40ODA0NjktMjI0LTIyNC0yMjR6bTAgMCIgZmlsbD0iIzA2OWJiZCIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiI+PC9wYXRoPjxwYXRoIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgZD0ibTM2OCAyNzJoLTIyNGMtOC44MzIwMzEgMC0xNi03LjE2Nzk2OS0xNi0xNnM3LjE2Nzk2OS0xNiAxNi0xNmgyMjRjOC44MzIwMzEgMCAxNiA3LjE2Nzk2OSAxNiAxNnMtNy4xNjc5NjkgMTYtMTYgMTZ6bTAgMCIgZmlsbD0iIzA2OWJiZCIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiI+PC9wYXRoPjxwYXRoIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgZD0ibTI1NiAzODRjLTguODMyMDMxIDAtMTYtNy4xNjc5NjktMTYtMTZ2LTIyNGMwLTguODMyMDMxIDcuMTY3OTY5LTE2IDE2LTE2czE2IDcuMTY3OTY5IDE2IDE2djIyNGMwIDguODMyMDMxLTcuMTY3OTY5IDE2LTE2IDE2em0wIDAiIGZpbGw9IiMwNjliYmQiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiPjwvcGF0aD48L2c+PC9zdmc+" style="width: 30px; height: 30px;" />
+            <p class="text" style="color: #069BBD; display: inline;">&nbsp;&nbsp;Add another Report author</p></img>
+          </button>
+          
+            <div class="form-group" id="Dtitle" >
+              <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">TITLE&nbsp;&nbsp;:</p>
+              <input type="text" id="title" class="form-control" value="<?php echo $title ?>" style="display: inline; padding-right: 0px; width: 650px;">
+            </div>
+            <div class="form-group" id="Djournal_name">
+              <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">JOURNAL NAME&nbsp;&nbsp;:</p>
+              <input type="text" id="journal_name" class="form-control" value="<?php echo $journal_name ?>" style="display: inline; padding-right: 0px; width: 75%;">
+            </div>
+            <div class="form-group" id="Dperiodical_name">
+              <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">PERIODICAL TITLE&nbsp;&nbsp;:</p>
+              <input type="" id="periodical_name" class="form-control" value="<?php echo $periodical_name ?>" style="display: inline; padding-right: 0px; width: 75%;">
+            </div>
+            <div class="form-group" id="Dcity">
+                  <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">CITY&nbsp;&nbsp;:</p>
+                  <input type="text" id="city" class="form-control" value="<?php echo $city ?>" style="width: 500px; display: inline-block; padding-right: 0px; ">
+            </div>
+            <div class="form-group" id="DdateP">
+              <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">DATE PUBLISHED&nbsp;&nbsp;:</p>
+              <input type="text" id="dayP" class="form-control" value="<?php echo $dayP ?>" style="width: 150px; display: inline-block; padding-right: 0px;">
+              <input type="text" id="monthP" class="form-control" value="<?php echo $monthP ?>" style="width: 150px; display: inline-block; padding-right: 0px;">
+              <input type="text" id="yearP" class="form-control" value="<?php echo $yearP ?>" style="width: 150px; display: inline-block; padding-right: 0px;">
+            </div>
+            <div class="form-group" id="Dpages">
+              <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">PAGES&nbsp;&nbsp;:</p>
+              <input type="text" id="pages" class="form-control" value="<?php echo $pages ?>" placeholder="50-62" style="width: 500px; display: inline-block; padding-right: 0px; ">
+            </div>
+        
+
+          <!-- Demo Collapse -->
+          <div id="demo" class="collapse">
+            <div class="md-form">
+              <div class="form-group" id="Deditor">
+                <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">EDITOR&nbsp;&nbsp;:</p>
+                <input type="text" id="editor" class="form-control" placeholder="Kramer, James D; Chen, Jacky" style="width: 500px; display: inline-block; padding-right: 0px; ">
+              </div>
+              <div class="form-group" id="Dpublisher">
+                <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">PUBLISHER&nbsp;&nbsp;:</p>
+                <input type="text" id="publisher" class="form-control" placeholder="Adventure Works Monthly" style="width: 500px; display: inline-block; padding-right: 0px; ">
+              </div>
+              <div class="form-group" id="Dedition">
+                <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">EDITON&nbsp;&nbsp;:</p>
+                <input type="text" id="edition" class="form-control" placeholder="Weekend" style="width: 500px; display: inline-block; padding-right: 0px; ">
+              </div>
+              <div class="form-group" id="Dvolume">
+                <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">VOLUME&nbsp;&nbsp;:</p>
+                <input type="text" id="volume" class="form-control" placeholder="III" style="width: 500px; display: inline-block; padding-right: 0px; ">
+              </div>
+              <div class="form-group" id="Dissue">
+                <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">ISSUE&nbsp;&nbsp;:</p>
+                <input type="text" id="issue" class="form-control" placeholder="12" style="width: 500px; display: inline-block; padding-right: 0px; ">
+              </div>
+              <div class="form-group" id="Dshort_title">
+                <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">SHORT TITLE&nbsp;&nbsp;:</p>
+                <input type="text" id="short_title" class="form-control" placeholder="Bibliographies" style="width: 500px; display: inline-block; padding-right: 0px; ">
+              </div>
+              <div class="form-group" id="Dstandard_num">
+                <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">STANDARD NUMBER&nbsp;&nbsp;:</p>
+                <input type="text" id="standard_num" class="form-control" placeholder="ISBN/ISSN" style="width: 500px; display: inline-block; padding-right: 0px; ">
+              </div>
+              <div class="form-group" id="Dcomment">
+                <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">COMMENTS&nbsp;&nbsp;:</p>
+                <input type="text" id="comment" class="form-control" placeholder="enter comment about this source" style="width: 500px; display: inline-block; padding-right: 0px; ">
+              </div>
+              <div class="form-group" id="Dmedium">
+                <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">MEDIUM&nbsp;&nbsp;:</p>
+              <input type="text" id="medium" class="form-control" placeholder="Document" style="width: 500px; display: inline-block; padding-right: 0px; ">
+              </div>
+              <div class="form-group" id="DdateACC">
+                <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">DATE ACCESSED&nbsp;&nbsp;:</p>
+                <input type="text" id="dayACC" class="form-control" placeholder="1" style="width: 150px; display: inline-block; padding-right: 0px;">
+                <input type="text" id="monthACC" class="form-control" placeholder="January" style="width: 150px; display: inline-block; padding-right: 0px;">
+                <input type="text" id="yearACC" class="form-control" placeholder="2006" style="width: 150px; display: inline-block; padding-right: 0px;">
+              </div>
+              <div class="form-group" id="Durl">
+                <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">URL&nbsp;&nbsp;:</p>
+                <input type="text" id="url" class="form-control" placeholder="http://www.adatum.com" style="width: 650px; display: inline-block; padding-right: 0px;">
+              </div>
+              <div class="form-group" id="Ddoi">
+                <p class="text" style="padding-left: 25px; padding-right: 10px; display: inline-block;">DOI&nbsp;&nbsp;:</p>
+                <input type="text" id="doi" class="form-control" placeholder="10.1000/182" style="width: 500px; display: inline-block; padding-right: 0px; ">
+              </div>
+              <!-- <input type="hidden" name="emp_id" id="emp_id" value="<?php echo $id; ?> />   -->
+
+            </div>
+          </div>
+        </from>
+       </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info mr-auto" data-toggle="collapse" data-target="#demo"
+            style="background-color: white; border: none;">
+            <p class="text" style="display: inline-block; color: black; align-content: center;">Show more detail</p>
+          </button><br />
+          <input type="button" name="update" id="update" class="btn btn-info" value="Update" />
+        </div>
+      </div>  
   </div>
 </div>
+<!-- ####################################################################################################################### -->
+
 
 <script type="text/javascript">
   $(document).ready(function () {
@@ -368,6 +512,23 @@ include "config_s.php";
 
     $('#submit').click(function () {
       saveAuthor();
+    });
+    $('#update').click(function () {
+      editAuthor();
+    });
+
+    $('.editbtn').click(function(){
+      $('#myEditModal').modal('show');
+        $tr = $(this).closet('tr');
+        var data = $tr.children("td").map(function(){
+          return $(this).text();
+        }).get();
+
+        console.log(data);
+        
+        // $('#update_id').val(data.update_id);
+        $('#name').val(data.name);
+        $('#title').val(data.title);
     });
 
     // $('#userinfo').click(function(){
@@ -507,5 +668,66 @@ include "config_s.php";
       //}
       
     }
+
+    function editAuthor() {
+
+      var name = $('#name').val();
+      var title = $('#title').val();
+      var journal_name = $('#journal_name').val();
+      var periodical_name = $('#periodical_name').val();
+      var city= $('#city').val();
+      var dayP = $('#dayP').val();
+      var monthP = $('#monthP').val();
+      var yearP = $('#yearP').val();
+      var pages = $('#pages').val();
+      var editor = $('#editor').val();
+      var publisher = $('#publisher').val();
+      var edition = $('#edition').val();
+      var volume = $('#volume').val();
+      var issue = $('#issue').val();
+      var short_title = $('#short_title').val();
+      var standard_num = $('#standard_num').val();
+      var comment = $('#comment').val();
+      var medium = $('#medium').val();
+      var dayACC = $('#dayACC').val();
+      var monthACC = $('#monthACC').val();
+      var yearACC = $('#yearACC').val();
+      var url = $('#url').val();
+      var doi = $('#doi').val();
+
+      // if (title != '' ) {
+        $.ajax({
+          url: 'update.php',
+          type: 'POST',
+          data: {
+            // "title=" + title + "&journal_name=" + journal_name + "&periodical_name=" + periodical_name + "&city=" + city + "&dayP=" + dayP + "&monthP=" + monthP + "&yearP=" + yearP + "&pages=" + pages,
+          name: name,
+          title: title, 
+          journal_name: journal_name, 
+          periodical_name: periodical_name,
+          city: city, 
+          dayP: dayP,
+          monthP: monthP, 
+          yearP: yearP, 
+          pages: pages, 
+          editor: editor, 
+          publisher: publisher, 
+          edition: edition, 
+          volume: volume, 
+          issue: issue, 
+          short_title: short_title, 
+          standard_num: standard_num,
+          comment: comment, 
+          medium: medium, 
+          dayACC: dayACC, 
+          monthACC: monthACC, 
+          yearACC: yearACC, 
+          url: url, 
+          doi: doi,
+          },
+        });
+      //}
+
+      }
   });  
 </script>
