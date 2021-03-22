@@ -62,9 +62,9 @@ include "config_s.php";
       <div class="rightBody">
         <p class="text" style="display: inline-block; margin-left: 15px; margin-top:15px;">All Bibliographys</p>
         <input type="text" class="form-control" placeholder="Search" style="width: 200px; display: inline-block; margin-left: 10px;"></p>
-
-        <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 360px; background-color: white;">
-          <table class="table table-bordered table-striped mb-0" id="tableAuthor" style='border-collapse: collapse;'>
+        <div class="container" style="height: 360px; background-color: white;">
+        
+          <table class="table table-striped" id="tableAuthor" style='border-collapse: collapse;'>
             <tr>
               <th>&nbsp;</th>
               <th>&nbsp;</th>
@@ -75,36 +75,6 @@ include "config_s.php";
               <th>&nbsp;</th>
               <th>&nbsp;</th>
             </tr>
-            <?php 
-              $query = "select * from author";
-              $result = mysqli_query($con,$query);
-              while($row = mysqli_fetch_array($result)){
-                $id = $row['id'];
-                $name = $row['name'];
-                $title = $row['title'];
-                $journal = $row['journal_name'];
-                $year = $row['yearACC'];
-                ?>
-                <td>
-                  <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
-
-                </td>
-                <?php
-                  // echo "<td></td>";
-                  echo "<td></td>";
-                  echo "<td>".$name."</td>";
-                  echo "<td>".$title."</td>";
-                  echo "<td>".$journal."</td>";
-                  echo "<td>".$year."</td>";
-                ?>
-                <td>
-                  <button type="button" class="btn btn-warning editbtn"  id="<?php echo $row['id'] ?>" id="userinfo" name="edit_author"><i class="fas fa-edit" style="color:white"></i></button>
-                  <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
-                </td>
-                <?php
-                echo "</tr>";
-              }
-            ?>
           </table>
         </div>
 
@@ -130,14 +100,6 @@ include "config_s.php";
     </div>
 
     <style>
-      .my-custom-scrollbar {
-        position: relative;
-        height: 200px;
-        overflow: auto;
-      }
-      .table-wrapper-scroll-y {
-        display: block;
-      }
       .containerBody {
         background-color: rgb(249, 249, 249);
         height: 100%;
@@ -165,11 +127,6 @@ include "config_s.php";
         height: 110px;
         text-align: left;
       }
-      /* .fixed {
-        max-height: 360px;
-        max-width:98%;
-        position: center;
-      } */
     </style>
 
     <!-- Bootstrap core JavaScript -->
@@ -193,13 +150,13 @@ include "config_s.php";
         <h4 class="modal-title">Create Source</h4>
         <h5 class="modal-title" style="display: contents;">Type of Source&nbsp;&nbsp;&nbsp;:</h5>
         <div class="form-group" style="display: inline-block;">
-          <select class="form-control" data-role="" name="selectValue" style="max-width: 255px; max-height: 35px;
+          <select class="form-control" data-role="" id="selectValue" style="max-width: 255px; max-height: 35px;
                                          padding: 0px 0px; border: none; background:none; font-size: 18px; ">
-            <option selected disabled value="value0" >Select Type of Source</option>
+            <!-- <option value="value0"></option> -->
             <!-- <option value="value1">Book</option>
             <option value="value2">Book Section</option> -->
-            <option name="journal" value="value3">Journal Article</option>
-            <option name="periodical" value="value4">Article in a Periodical</option>
+            <option value="value3">Journal Article</option>
+            <option selected value="value4">Article in a Periodical</option>
             <!-- <option value="value5">Conference Proceedings</option>
             <option value="value6">Report</option>
             <option value="value7">Web site</option>
@@ -228,7 +185,7 @@ include "config_s.php";
                 <table id="dynamic_field">
                   <tr>
                     <td class="text" style="padding-left: 25px;">AUTHOR&nbsp;&nbsp;</td>
-                    <td><input type="text" id="name" placeholder="Kramer, James D; Chen, Jacky" required class="form-control name_list"
+                    <td><input type="text" id="name" placeholder="Kramer, James D; Chen, Jacky" class="form-control name_list"
                         style="width: 400px;" /></td>
                     <td><button type="button" name="remove" id="'+i+'" class="btn btn_remove"><img
                           src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxnPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPHBhdGggZD0iTTI1NiwwQzExNC44NTMsMCwwLDExNC44MzMsMCwyNTZzMTE0Ljg1MywyNTYsMjU2LDI1NmMxNDEuMTY3LDAsMjU2LTExNC44MzMsMjU2LTI1NlMzOTcuMTQ3LDAsMjU2LDB6IE0yNTYsNDcyLjM0MSAgICBjLTExOS4yOTUsMC0yMTYuMzQxLTk3LjA0Ni0yMTYuMzQxLTIxNi4zNDFTMTM2LjcwNSwzOS42NTksMjU2LDM5LjY1OVM0NzIuMzQxLDEzNi43MDUsNDcyLjM0MSwyNTZTMzc1LjI5NSw0NzIuMzQxLDI1Niw0NzIuMzQxeiAgICAiIGZpbGw9IiNjYjAwMDAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIHN0eWxlPSIiPjwvcGF0aD4KCTwvZz4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoJPGc+CgkJPHBhdGggZD0iTTM1NS4xNDgsMjM0LjM4NkgxNTYuODUyYy0xMC45NDYsMC0xOS44Myw4Ljg4NC0xOS44MywxOS44M3M4Ljg4NCwxOS44MywxOS44MywxOS44M2gxOTguMjk2ICAgIGMxMC45NDYsMCwxOS44My04Ljg4NCwxOS44My0xOS44M1MzNjYuMDk0LDIzNC4zODYsMzU1LjE0OCwyMzQuMzg2eiIgZmlsbD0iI2NiMDAwMCIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgc3R5bGU9IiI+PC9wYXRoPgoJPC9nPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwvZz4KPGcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPC9nPgo8ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8L2c+CjwvZz48L3N2Zz4="
@@ -362,7 +319,7 @@ include "config_s.php";
             <!-- <option value="value1">Book</option>
             <option value="value2">Book Section</option> -->
             <option value="value3">Journal Article</option>
-            <option value="value4">Article in a Periodical</option>
+            <option selected value="value4">Article in a Periodical</option>
             <!-- <option value="value5">Conference Proceedings</option>
             <option value="value6">Report</option>
             <option value="value7">Web site</option>
@@ -530,104 +487,36 @@ include "config_s.php";
       editAuthor();
     });
 
-    $(document).ready(function(){
-      $(document).ajaxSuccess(function(){
-        alert("saved");
-      });
-      $("#submit").click(function(){
-        $("div").load("demo_ajax_load.txt");
-        $('#myModal').modal('hide');
-      });
-    });
+    // $('.editbtn').click(function(){
+    //   $('#myEditModal').modal('show');
+    //     $tr = $(this).closet('tr');
+    //     var data = $tr.children("td").map(function(){
+    //       return $(this).text();
+    //     }).get();
 
-    $('.editbtn').click(function(){
-      $('#myEditModal').modal('show');
-        $tr = $(this).closet('tr');
-        var data = $tr.children("td").map(function(){
-          return $(this).text();
-        }).get();
-
-        console.log(data);
+    //     console.log(data);
         
-        // $('#update_id').val(data.update_id);
-        $('#name').val(data.name);
-        $('#title').val(data.title);
-    });
-
-    // $('#userinfo').click(function(){
-   
-    //   var userid = $(this).data('id');
-
-    //  // AJAX request
-    //   $.ajax({
-    //     url: 'ajax_file.php',
-    //     type: 'post',
-    //     data: {userid: userid},
-    //     success: function(response){ 
-    //       // Add response in Modal body
-    //       $('.modal-body').html(response);
-
-    //       // Display Modal
-    //       $('#empModal').modal('show'); 
-    //     }
-    //  });
+    //     // $('#update_id').val(data.update_id);
+    //     $('#name').val(data.name);
+    //     $('#title').val(data.title);
     // });
+    var dataTable = $('#tableAuthor').DataTable({
+        "processing":true,
+        "serverSide":true,
+        "order":[],
+        "ajax":{
+        url:"fetch.php",
+        type:"POST"
+        },
+        "columnDefs":[
+        {
+            "targets":[4,5,6],
+            "orderable":false,
+        },
+        ],
+    });
+    
 
-    // $('#userinfo').click(function(){
-   
-    //   var id_count = $(this).attr('id');
-
-    //     // AJAX request
-    //     $.ajax({
-    //       url: 'ajax_fetch.php',
-    //       type: 'post',
-    //       data: {id_count:id_count},
-    //      success:function(data){  
-    //                  $('#name').val(data.name);  
-    //                  $('#title').val(data.title);  
-    //                  $('#journal_name').val(data.journal_name);  
-    //                  $('#yearACC').val(data.yearACC);  
-    //                  $('#id').val(data.id_count);  
-    //                  $('#submit').val("Update");  
-    //                  $('#myModal').modal('show');  
-    //             }  
-    //     });
-    //   });
-
-    // $('#userinfo').click(function(){  
-    //        var emp_id = $(this).data("id");  
-    //        $.ajax({  
-    //             url:"ajax_fetch.php",  
-    //             method:"POST",  
-    //             data:{emp_id:emp_id},  
-    //             dataType:"json",  
-    //             success:function(data){  
-    //                  $('#name').val(data.name);  
-    //                  $('#title').val(data.title);  
-    //                  $('#journal_name').val(data.journal_num);  
-    //                  $('#yearACC').val(data.yearACC);  
-    //                  $('#id').val(data.id);  
-    //                  $('#emp_id').val(data.id);  
-    //                  $('#submit').val("Update");  
-    //                  $('#myModal').modal('show');  
-    //             }  
-    //        });  
-    //   });  
-
-    $('select[name=selectValue]').change(function () {
-      $("select[name=selectValue] option:selected").each(function () {
-          var value = $(this).val();
-          if(value == "value3") {
-              $('#Djournal_name').show();
-              $('#Dperiodical_name').hide();
-            
-          } else if(value == "value4") {
-              $('#Djournal_name').hide();
-              $('#Dperiodical_name').show();
-            
-          } 
-      });
-    }); 
 
 
 
