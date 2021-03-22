@@ -91,7 +91,7 @@ include "config_s.php";
                 </td>
                 <?php
                   // echo "<td></td>";
-                  echo "<td></td>";
+                  echo "<td>".$id."</td>";
                   echo "<td>".$name."</td>";
                   echo "<td>".$title."</td>";
                   echo "<td>".$journal."</td>";
@@ -99,7 +99,7 @@ include "config_s.php";
                 ?>
                 <td>
                   <button type="button" class="btn btn-warning editbtn"  id="<?php echo $row['id'] ?>" id="userinfo" name="edit_author"><i class="fas fa-edit" style="color:white"></i></button>
-                  <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                  <button type="button" class="btn btn-danger deleteUser"><i class="bi bi-trash"></i></button>
                 </td>
                 <?php
                 echo "</tr>";
@@ -337,7 +337,7 @@ include "config_s.php";
             style="background-color: white; border: none;">
             <p class="text" style="display: inline-block; color: black; align-content: center;">Show more detail</p>
           </button><br />
-          <input type="button" name="submit" id="submit" class="btn btn-info" value="Submit" />
+          <input type="button" name="submitSave" id="submitSave" class="btn btn-info" value="Submit" />
         </div>
       </div>  
   </div>
@@ -522,23 +522,41 @@ include "config_s.php";
       var button_id = $(this).attr("id");
       $('#row' + button_id + '').remove();
     });
-
-    $('#submit').click(function () {
+    //กด submit แล้ว save
+    $('#submitSave').click(function () {
       saveAuthor();
-    });
-    $('#update').click(function () {
-      editAuthor();
-    });
-
-    $(document).ready(function(){
       $(document).ajaxSuccess(function(){
         alert("saved");
       });
-      $("#submit").click(function(){
+    });
+    // กด submit แล้ว alert & refreash
+    $("#submitSave").click(function(){
         $("div").load("demo_ajax_load.txt");
         $('#myModal').modal('hide');
+        setTimeout(function(){
+           location.reload();
+        }, 1000); 
       });
+
+    $('#update').click(function () {
+      editAuthor();
     });
+    // เลือก Type of Source
+    $('select[name=selectValue]').change(function () {
+      $("select[name=selectValue] option:selected").each(function () {
+          var value = $(this).val();
+          if(value == "value3") {
+              $('#Djournal_name').show();
+              $('#Dperiodical_name').hide();
+            
+          } else if(value == "value4") {
+              $('#Djournal_name').hide();
+              $('#Dperiodical_name').show();
+            
+          } 
+      });
+    }); 
+   
 
     $('.editbtn').click(function(){
       $('#myEditModal').modal('show');
@@ -554,6 +572,34 @@ include "config_s.php";
         $('#title').val(data.title);
     });
 
+        // Delete record
+        var userDataTable = $('#tableAuthor').DataTable({
+
+        $('#tableAuthor').on('click','.deleteUser',function(){
+          var id = $(this).data('id');
+
+          var deleteConfirm = confirm("Are you sure?");
+          if (deleteConfirm == true) {
+              // AJAX request
+              $.ajax({
+                url: 'ajaxfile.php',
+                type: 'post',
+                data: {request: 4, id: id},
+                success: function(response){
+                  if(response == 1){
+                      alert("Record deleted.");
+
+                      // Reload DataTable
+                      userDataTable.ajax.reload();
+                  }else{
+                      alert("Invalid ID.");
+                  }
+                }
+              });
+          } 
+
+        });
+        }
     // $('#userinfo').click(function(){
    
     //   var userid = $(this).data('id');
@@ -613,21 +659,6 @@ include "config_s.php";
     //             }  
     //        });  
     //   });  
-
-    $('select[name=selectValue]').change(function () {
-      $("select[name=selectValue] option:selected").each(function () {
-          var value = $(this).val();
-          if(value == "value3") {
-              $('#Djournal_name').show();
-              $('#Dperiodical_name').hide();
-            
-          } else if(value == "value4") {
-              $('#Djournal_name').hide();
-              $('#Dperiodical_name').show();
-            
-          } 
-      });
-    }); 
 
 
 

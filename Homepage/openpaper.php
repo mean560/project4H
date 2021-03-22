@@ -94,13 +94,18 @@
                     <?php
                         if (isset($_POST["buttonTranslate"])){
                             include("translate.php");
-                        } else if(isset($_POST["buttonPastofSentence"])){
-                            include("runpython.php");
+                        // } else if(isset($_POST["buttonPastofSentence"])){
+                        //     include("runpython.php");
                         } else {
                             echo " ";
                         }
                     ?>
                 </textarea>
+                <?php 
+                    if(isset($))
+                    ?>
+                <iframe src="test_if.html" height="200" width="520" title="Iframe Example"></iframe>
+
             </from>
         </aside>
     </body>
