@@ -1,7 +1,7 @@
 <?php
 
 include "config_s.php";
-
+$id = $_POST['update_id'];
 $name = $_POST['name'];
 $title = $_POST['title'];
 $journal_name = $_POST['journal_name'];
@@ -25,12 +25,18 @@ $monthACC =  $_POST['monthACC'];
 $yearACC =  $_POST['yearACC'];
 $url =  $_POST['url'];
 $doi =  $_POST['doi'];
-$id_count = $_POST['id_count'];
+$id = $_POST['id'];
 
 
-	
-$edit = mysqli_query($con,"update author set name='$name' where id=2");
-	
+
+
+	$sql = "UPDATE `author` SET `name`='$name',`title`='$title',`journal_name`='$journal_name',`periodical_name`='$periodical_name',`city`='$city',`dayP`='$dayP',
+	`monthP`='$monthP',`yearP`='$yearP',`pages`='$pages',`editor`='$editor',`publisher`='$publisher',`edition`='$edition',
+	`volume`='$volume',`issue`='$issue',`short_title`='$short_title',`standard_num`='$standard_num',`comment`='$comment',`medium`='$medium',
+	`dayACC`='$dayACC',`monthACC`='$monthACC',`yearACC`='$yearACC',`url`='$url',`doi`='$doi' WHERE id=$id";
+	 mysqli_query($con, $sql);
+
+
 
 
 ?>

@@ -98,7 +98,9 @@ include "config_s.php";
                   echo "<td>".$year."</td>";
                 ?>
                 <td>
-                  <button type="button" class="btn btn-warning editbtn"  id="<?php echo $row['id'] ?>" id="userinfo" name="edit_author"><i class="fas fa-edit" style="color:white"></i></button>
+                  <button type="button" class="btn btn-warning update" data-toggle="modal" data-keyboard="false" 
+                  data-backdrop="static" data-target="#myEditModal" data-id="<?=$row['id'];?>" id="update" 
+                  name="update"><i class="fas fa-edit" style="color:white"></i></button>
                   <button type="button" class="btn btn-danger deleteUser"><i class="bi bi-trash"></i></button>
                 </td>
                 <?php
@@ -383,7 +385,7 @@ include "config_s.php";
       <div class="modal-body">
         <!-- <div class="container"> -->
         <form method="POST" name="edit_name" id="edit_name action="update.php">
-          <input type="hidden" name="update_id" id="update_id" value="<?php echo $id; ?>">  
+          <input type="hidden" name="update_id" id="update_id">  
 
           <div class="form-group">
             <!-- <form method="POST" name="add_name" id="add_name"> -->
@@ -541,6 +543,7 @@ include "config_s.php";
     $('#update').click(function () {
       editAuthor();
     });
+
     // เลือก Type of Source
     $('select[name=selectValue]').change(function () {
       $("select[name=selectValue] option:selected").each(function () {
@@ -558,113 +561,24 @@ include "config_s.php";
     }); 
    
 
-    $('.editbtn').click(function(){
-      $('#myEditModal').modal('show');
-        $tr = $(this).closet('tr');
-        var data = $tr.children("td").map(function(){
-          return $(this).text();
-        }).get();
+    // $('.editbtn').click(function(){
+    //   $('#myEditModal').modal('show');
+    //     $tr = $(this).closet('tr');
+    //     var data = $tr.children("td").map(function(){
+    //       return $(this).text();
+    //     }).get();
 
-        console.log(data);
+    //     console.log(data);
         
-        // $('#update_id').val(data.update_id);
-        $('#name').val(data.name);
-        $('#title').val(data.title);
-    });
-
-        // Delete record
-        var userDataTable = $('#tableAuthor').DataTable({
-
-        $('#tableAuthor').on('click','.deleteUser',function(){
-          var id = $(this).data('id');
-
-          var deleteConfirm = confirm("Are you sure?");
-          if (deleteConfirm == true) {
-              // AJAX request
-              $.ajax({
-                url: 'ajaxfile.php',
-                type: 'post',
-                data: {request: 4, id: id},
-                success: function(response){
-                  if(response == 1){
-                      alert("Record deleted.");
-
-                      // Reload DataTable
-                      userDataTable.ajax.reload();
-                  }else{
-                      alert("Invalid ID.");
-                  }
-                }
-              });
-          } 
-
-        });
-        }
-    // $('#userinfo').click(function(){
-   
-    //   var userid = $(this).data('id');
-
-    //  // AJAX request
-    //   $.ajax({
-    //     url: 'ajax_file.php',
-    //     type: 'post',
-    //     data: {userid: userid},
-    //     success: function(response){ 
-    //       // Add response in Modal body
-    //       $('.modal-body').html(response);
-
-    //       // Display Modal
-    //       $('#empModal').modal('show'); 
-    //     }
-    //  });
+    //     // $('#update_id').val(data.update_id);
+    //     $('#name').val(data.name);
+    //     $('#title').val(data.title);
     // });
-
-    // $('#userinfo').click(function(){
-   
-    //   var id_count = $(this).attr('id');
-
-    //     // AJAX request
-    //     $.ajax({
-    //       url: 'ajax_fetch.php',
-    //       type: 'post',
-    //       data: {id_count:id_count},
-    //      success:function(data){  
-    //                  $('#name').val(data.name);  
-    //                  $('#title').val(data.title);  
-    //                  $('#journal_name').val(data.journal_name);  
-    //                  $('#yearACC').val(data.yearACC);  
-    //                  $('#id').val(data.id_count);  
-    //                  $('#submit').val("Update");  
-    //                  $('#myModal').modal('show');  
-    //             }  
-    //     });
-    //   });
-
-    // $('#userinfo').click(function(){  
-    //        var emp_id = $(this).data("id");  
-    //        $.ajax({  
-    //             url:"ajax_fetch.php",  
-    //             method:"POST",  
-    //             data:{emp_id:emp_id},  
-    //             dataType:"json",  
-    //             success:function(data){  
-    //                  $('#name').val(data.name);  
-    //                  $('#title').val(data.title);  
-    //                  $('#journal_name').val(data.journal_num);  
-    //                  $('#yearACC').val(data.yearACC);  
-    //                  $('#id').val(data.id);  
-    //                  $('#emp_id').val(data.id);  
-    //                  $('#submit').val("Update");  
-    //                  $('#myModal').modal('show');  
-    //             }  
-    //        });  
-    //   });  
-
 
 
     //Save Author
     function saveAuthor() {
-
+      var update_id = $('#update_id').val();
       var name = $('#name').val();
       var title = $('#title').val();
       var journal_name = $('#journal_name').val();
@@ -725,7 +639,7 @@ include "config_s.php";
     }
 
     function editAuthor() {
-
+      var id = $('#update_id').val();
       var name = $('#name').val();
       var title = $('#title').val();
       var journal_name = $('#journal_name').val();
@@ -755,7 +669,7 @@ include "config_s.php";
           url: 'update.php',
           type: 'POST',
           data: {
-            // "title=" + title + "&journal_name=" + journal_name + "&periodical_name=" + periodical_name + "&city=" + city + "&dayP=" + dayP + "&monthP=" + monthP + "&yearP=" + yearP + "&pages=" + pages,
+          id:update_id,
           name: name,
           title: title, 
           journal_name: journal_name, 

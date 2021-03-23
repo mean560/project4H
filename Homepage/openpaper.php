@@ -27,49 +27,19 @@
 <body>
     <div class="middle">
         <aside class="left">
-
             <div class="middle_right" align="left">
-                <div class="col-xs-12 well">
-                    <form method="post" enctype="multipart/form-data">
-                        <div class="form-upload">
-                            <i class="fas fa-file-upload" style="font-size:54px;"></i>
-                            <font style="font-size:32px;">Upload File</font>
-                            <input type="hidden" value="1000000000" name="MAX_FILE_SIZE" />
-                        </div>
-                        <div class="form-file">
-                            <input type="file" name="uploadfile" />
-                        </div>
-
-                        <input type="submit" name="submit" value="Upload" class="btn" />
-
-                    </form>
-
-                </div>
-
-                <?php if (isset($_POST['submit'])) {
-
-                    $target_path = "uploads/";
-                    $target_path = $target_path . basename($_FILES['uploadfile']['name']);
-                    if (move_uploaded_file($_FILES['uploadfile']['tmp_name'], $target_path)) {
-                        $conn = new mysqli("localhost", "root", "", "userdb1", "4406");
-                        $sql = "Insert into upload(`name`) values('$target_path')";
-                        if ($conn->query($sql) == TRUE) {
-                            echo "<br><br>";
+                <form method="POST" action="openpaper.php?action=ok">
+                <textarea class="form-control" rows="10" name="inserttxt">
+                    <?php
+                        if(isset($_POST["inserttxt"])){
+                            echo $_POST["inserttxt"];
                         } else {
-                            echo "ERROR:" . $sql . $conn->error;
+                            echo " ";
                         }
-
-                        $sql = "SELECT name FROM upload ORDER BY id DESC LIMIT 1";
-                        $result = $conn->query($sql);
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                $path = $row['name'];
-                                echo "<embed src='$path' width='100%' height='700px' >";
-                            }
-                        }
-                        $conn->close();
-                    }
-                } ?>
+                    ?>
+                </textarea>
+                </form>
+                
             </div>
         </aside>
         
@@ -90,22 +60,20 @@
                 <input class="sentence" type="submit" name="buttonPastofSentence" id="buttonPastofSentence" value="Simple Sentence">
                 <input class="translate" type="submit" name="buttonTranslate" id="buttonTranslate" value="Translate">
                 
+
                 <textarea class="form-control" name='showtext' rows='10' cols='72'>
                     <?php
                         if (isset($_POST["buttonTranslate"])){
                             include("translate.php");
-                        // } else if(isset($_POST["buttonPastofSentence"])){
-                        //     include("runpython.php");
+                        } else if(isset($_POST["buttonPastofSentence"])){
+                            include("runpython.php");
                         } else {
                             echo " ";
                         }
                     ?>
                 </textarea>
-                <?php 
-                    if(isset($))
-                    ?>
-                <iframe src="test_if.html" height="200" width="520" title="Iframe Example"></iframe>
-
+               
+                <!-- <iframe src="translate" height="200" width="520" title="Iframe Example"></iframe> --> -->
             </from>
         </aside>
     </body>
